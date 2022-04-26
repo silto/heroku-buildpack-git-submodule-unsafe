@@ -29,7 +29,7 @@ git init -q
 # enable sparse checkouts, this will avoid checking out
 # all the files in the repo, we'll only check out .gitmodules
 git config core.sparseCheckout true
-echo ".gitmodules" > .git/info/sparse-checkout
+echo ".gitmodules_heroku" > .git/info/sparse-checkout
 
 # add the repo as a remote and fetch the repo's history
 git remote add origin "$GIT_REPO_URL"
@@ -52,6 +52,9 @@ echo "-----> Installed SSH key from GIT_SSH_KEY"
 git fetch -q --depth 1 origin -a > /dev/null
 git checkout -q ${SOURCE_VERSION:-master} > /dev/null
 echo "-----> Fetched shallow history from $GIT_REPO_URL"
+
+# use the heroku-specific gitmodules file
+mv .gitmodules_heroku .gitmodules
 
 # initialize all the submodules
 git submodule -q update --init --recursive
